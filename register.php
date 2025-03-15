@@ -1,5 +1,5 @@
 <?php
-$conn = new mysqli("localhost", "root", "Regular69.", "db_hor") or die(mysqli_error($conn));
+include('./admin/connect.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['signup'])) {
     $full_name = $conn->real_escape_string($_POST['full_name']);
@@ -9,9 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['signup'])) {
     $sql = "INSERT INTO user (full_name, username, password) VALUES ('$full_name', '$username', '$password')";
     
     if ($conn->query($sql) === TRUE) {
-        $access_token = base64_encode($username . ':' . $_POST['password']);
-        setcookie('access_token', $access_token, time() + (86400 * 30), "/");
-        header("Location: /Capstone_Project/");
+        header("Location: /Online_Hotel_Reservation/Online_Hotel_Reservation/login.php");
         exit();
     } else {
         $error_message = "Error: " . $conn->error;
@@ -23,17 +21,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['signup'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>register</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
+            background-image: url("./images/a.jpeg");
+            background-size: cover;
+            background-position: center;
             margin: 0;
             padding: 20px;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
         .register-container {
             background-color: white;
@@ -107,10 +110,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['signup'])) {
             </p>
         </form>
     </div>
-
     <script>
         if (document.cookie.includes('access_token')) {
-            window.location.href = '/Capstone_Project/';
+            window.location.href = '/Online_Hotel_Reservation/Online_Hotel_Reservation/';
         }
     </script>
 </body>

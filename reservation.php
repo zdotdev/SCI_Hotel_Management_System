@@ -27,7 +27,7 @@
 				<strong><h3>MAKE A RESERVATION</h3></strong>
 				<?php
 					require_once 'admin/connect.php';
-					$query = $conn->query("SELECT * FROM `room` ORDER BY `price` ASC") or die(mysql_error());
+					$query = $conn->query("SELECT * FROM `room` ORDER BY `price` ASC") or die(mysqli_error($conn));
 					while($fetch = $query->fetch_array()){
 				?>
 					<div class = "well" style = "height:300px; width:100%;">

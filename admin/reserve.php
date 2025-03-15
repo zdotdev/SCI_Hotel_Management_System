@@ -1,3 +1,9 @@
+<script>
+	function logout() {
+		document.cookie = "PHPSESSID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+		window.location.href = "/Online_Hotel_Reservation/Online_Hotel_Reservation/admin/";
+	}
+</script>
 <!DOCTYPE html>
 <?php
 	require_once 'validate.php';
@@ -32,16 +38,22 @@
 			<li><a href = "home.php">Home</a></li>
 			<li><a href = "account.php">Accounts</a></li>
 			<li class = "active"><a href = "reserve.php">Reservation</a></li>
-			<li><a href = "room.php">Room</a></li>			
+			<li><a href = "room.php">Room</a></li>		
+			<?php 
+				$query_pending = $conn->query("SELECT COUNT(*) as pending_count FROM payments WHERE status = 'pending'") or die(mysqli_error($conn));
+				$pending_count = $query_pending->fetch_assoc()['pending_count'];
+			?>
+			<li><a href = "payment.php">Payment <?php if($pending_count > 0): ?><span class="badge"><?php echo $pending_count; ?></span><?php endif; ?></a></li>		
+			<li><a onclick="logout()" style="cursor: pointer;">log out</a></li>
 		</ul>	
 	</div>
 	<br />
 	<div class = "container-fluid">	
 		<div class = "panel panel-default">
 			<?php
-				$q_p = $conn->query("SELECT COUNT(*) as total FROM `transaction` WHERE `status` = 'Pending'") or die(mysqli_error());
+				$q_p = $conn->query("SELECT COUNT(*) as total FROM `transaction` WHERE `status` = 'Pending'") or die(mysqli_error($conn));
 				$f_p = $q_p->fetch_array();
-				$q_ci = $conn->query("SELECT COUNT(*) as total FROM `transaction` WHERE `status` = 'Check In'") or die(mysqli_error());
+				$q_ci = $conn->query("SELECT COUNT(*) as total FROM `transaction` WHERE `status` = 'Check In'") or die(mysqli_error($conn));
 				$f_ci = $q_ci->fetch_array();
 			?>
 			<div class = "panel-body">
@@ -56,23 +68,37 @@
 							<th>Name</th>
 							<th>Contact No</th>
 							<th>Room Type</th>
-							<th>Reserved Date</th>
+							<th>Room No</th>
+							<th>Extra Bed</th>
+							<th>Days</th>
+							<th>Check In Date</th>
+							<th>Check In Time</th>
+							<th>Check Out Date</th>
+							<th>Check Out Time</th>
+							<th>Bill</th>
 							<th>Status</th>
 							<th>Action</th>
 						</tr>
 					</thead>
 					<tbody>
 						<?php
-							$query = $conn->query("SELECT * FROM `transaction` NATURAL JOIN `guest` NATURAL JOIN `room` WHERE `status` = 'Pending'") or die(mysqli_error());
+							$query = $conn->query("SELECT * FROM `transaction` NATURAL JOIN `guest` NATURAL JOIN `room` WHERE `status` = 'Pending'") or die(mysqli_error($conn));
 							while($fetch = $query->fetch_array()){
 						?>
 						<tr>
 							<td><?php echo $fetch['firstname']." ".$fetch['lastname']?></td>
 							<td><?php echo $fetch['contactno']?></td>
 							<td><?php echo $fetch['room_type']?></td>
+							<td><?php echo $fetch['room_no']?></td>
+							<td><?php echo $fetch['extra_bed']?></td>
+							<td><?php echo $fetch['days']?></td>
 							<td><strong><?php if($fetch['checkin'] <= date("Y-m-d", strtotime("+8 HOURS"))){echo "<label style = 'color:#ff0000;'>".date("M d, Y", strtotime($fetch['checkin']))."</label>";}else{echo "<label style = 'color:#00ff00;'>".date("M d, Y", strtotime($fetch['checkin']))."</label>";}?></strong></td>
+							<td><?php echo $fetch['checkin_time']?></td>
+							<td><?php echo date("M d, Y", strtotime($fetch['checkout']))?></td>
+							<td><?php echo $fetch['checkout_time']?></td>
+							<td><?php echo $fetch['bill']?></td>
 							<td><?php echo $fetch['status']?></td>
-							<td><center><a class = "btn btn-success" href = "confirm_reserve.php?transaction_id=<?php echo $fetch['transaction_id']?>"><i class = "glyphicon glyphicon-check"></i> Check In</a> <a class = "btn btn-danger" onclick = "confirmationDelete(); return false;" href = "delete_pending.php?transaction_id=<?php echo $fetch['transaction_id']?>"><i class = "glyphicon glyphicon-trash"></i> Discard</a></td>
+							<td><center><a class = "btn btn-success" href = "confirm_reserve.php?transaction_id=<?php echo $fetch['transaction_id']?>"><i class = "glyphicon glyphicon-check"></i>Accept</a> <a class = "btn btn-danger" onclick = "confirmationDelete(); return false;" href = "delete_pending.php?transaction_id=<?php echo $fetch['transaction_id']?>"><i class = "glyphicon glyphicon-trash"></i>Reject</a></td>
 						</tr>
 						<?php
 							}

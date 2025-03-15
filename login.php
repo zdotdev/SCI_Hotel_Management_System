@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$conn = new mysqli('localhost', 'root', 'Regular69.', 'db_hor');
+include('./admin/connect.php');
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (password_verify($password, $user['password'])) {
             $access_token = base64_encode($username . $password);
             setcookie('access_token', $access_token, time() + 3600, '/');
-            header('Location: /Capstone_Project/');
+            header('Location: /Online_Hotel_Reservation/Online_Hotel_Reservation/');
             exit;
         } else {
             $error = "Invalid password";
@@ -39,12 +39,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
+            background-image: url("./images/a.jpeg");
+            background-size: cover;
+            background-position: center;
             margin: 0;
             padding: 20px;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
         .register-container {
             background-color: white;
@@ -95,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
     <div class="register-container">
-        <h2>Login</h2>
+        <h2>login</h2>
         <?php if (isset($error)): ?>
             <div class="error"><?php echo $error; ?></div>
         <?php endif; ?>
@@ -112,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <button type="submit" name="login">Login</button>
             </div>
             <p style="text-align: center;">
-                Don't have an account? <a href="register.php">Sign up here</a>
+                Don't have an account? <a href="register.php">Register here</a>
             </p>
         </form>
     </div>

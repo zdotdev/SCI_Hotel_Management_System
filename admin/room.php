@@ -1,3 +1,9 @@
+<script>
+	function logout() {
+		document.cookie = "PHPSESSID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+		window.location.href = "/Online_Hotel_Reservation/Online_Hotel_Reservation/admin/";
+	}
+</script>
 <!DOCTYPE html>
 <?php
 	require_once 'validate.php';
@@ -31,7 +37,13 @@
 			<li><a href = "home.php">Home</a></li>
 			<li><a href = "account.php">Accounts</a></li>
 			<li><a href = "reserve.php">Reservation</a></li>
-			<li><a href = "room.php">Room</a></li>			
+			<li class = "active"><a href = "room.php">Room</a></li>	
+			<?php 
+				$query_pending = $conn->query("SELECT COUNT(*) as pending_count FROM payments WHERE status = 'pending'") or die(mysqli_error($conn));
+				$pending_count = $query_pending->fetch_assoc()['pending_count'];
+			?>
+			<li><a href = "payment.php">Payment <?php if($pending_count > 0): ?><span class="badge"><?php echo $pending_count; ?></span><?php endif; ?></a></li>		
+			<li><a onclick="logout()" style="cursor: pointer;">log out</a></li>		
 		</ul>	
 	</div>
 	<br />
@@ -53,7 +65,7 @@
 					</thead>
 					<tbody>
 					<?php
-						$query = $conn->query("SELECT * FROM `room`") or die(mysqli_error());
+						$query = $conn->query("SELECT * FROM `room`") or die(mysqli_error($conn));
 						while($fetch = $query->fetch_array()){
 					?>	
 						<tr>

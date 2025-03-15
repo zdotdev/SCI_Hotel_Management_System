@@ -65,7 +65,23 @@
 						</div>
 						<div class = "form-group">
 							<label>Check in</label>
-							<input type = "date" class = "form-control" name = "date" required = "required" />
+							<input type = "date" class = "form-control" name = "date_in" required = "required" />
+						</div>
+						<div class = "form-group">
+							<label>Check in time</label>
+							<input type = "time" class = "form-control" name = "time_in" required = "required" />
+						</div>
+						<div class = "form-group">
+							<label>Check out</label>
+							<input type = "date" class = "form-control" name = "date_out" required = "required" />
+						</div>
+						<div class = "form-group">
+							<label>Check out time</label>
+							<input type = "time" class = "form-control" name = "time_out" required = "required" />
+						</div>
+						<div class = "form-group">
+							<label>Extra Bed</label>
+							<input type = "number" class = "form-control" name = "extra_bed" value="0" />
 						</div>
 						<br />
 						<div class = "form-group">

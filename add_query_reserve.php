@@ -1,21 +1,19 @@
 <?php
-	$conn = new mysqli("localhost", "root", "Regular69.", "db_hor") or die(mysqli_error($conn));
-	if(isset($_POST['add_guest'])){
-		$firstname = $conn->real_escape_string($_POST['firstname']);
-		$middlename = $conn->real_escape_string($_POST['middlename']);
-		$lastname = $conn->real_escape_string($_POST['lastname']);
-		$address = $conn->real_escape_string($_POST['address']);
-		$contactno = $conn->real_escape_string($_POST['contactno']);
-		$checkin = $conn->real_escape_string($_POST['date']);
-		$stmt = $conn->prepare("INSERT INTO `guest` (firstname, middlename, lastname, address, contactno) VALUES(?, ?, ?, ?, ?)");
-		$stmt->bind_param("sssss", $firstname, $middlename, $lastname, $address, $contactno);
-		$stmt->execute();
-		$stmt->close();
-		
-		$stmt = $conn->prepare("SELECT * FROM `guest` WHERE `firstname` = ? && `lastname` = ? && `contactno` = ?");
-		$stmt->bind_param("sss", $firstname, $lastname, $contactno);
-		$stmt->execute();
-		$query = $stmt->get_result();
+	require_once 'admin/connect.php';
+	if(ISSET($_POST['add_guest'])){
+		$firstname = $_POST['firstname'];
+		$middlename = $_POST['middlename'];
+		$lastname = $_POST['lastname'];
+		$address = $_POST['address'];
+		$contactno = $_POST['contactno'];
+		$checkin = $_POST['date_in'];
+		$checkintime = $_POST['time_in'];
+		$checkout = $_POST['date_out'];
+		$checkouttime = $_POST['time_out'];
+		$dayscount = (strtotime($checkout) - strtotime($checkin)) / (60 * 60 * 24);
+		$extra_bed = $_POST['extra_bed'];
+		$conn->query("INSERT INTO `guest` (firstname, middlename, lastname, address, contactno) VALUES('$firstname', '$middlename', '$lastname', '$address', '$contactno')") or die(mysqli_error($conn));
+		$query = $conn->query("SELECT * FROM `guest` WHERE `firstname` = '$firstname' && `lastname` = '$lastname' && `contactno` = '$contactno'") or die(mysqli_error($conn));
 		$fetch = $query->fetch_array();
 		$query2 = $conn->query("SELECT * FROM `transaction` WHERE `checkin` = '$checkin' && `room_id` = '$_REQUEST[room_id]' && `status` = 'Pending'") or die(mysqli_error($conn));
 		$row = $query2->num_rows;
@@ -37,18 +35,19 @@
 				}else{	
 						if($guest_id = $fetch['guest_id']){
 							$room_id = $_REQUEST['room_id'];
-							$query_room = $conn->query("SELECT * FROM `room` WHERE `room_id` = '$room_id'");
-							$room_data = $query_room->fetch_array();
-							if ($room_data && isset($room_data['room_no'])) {
-								$room_no = $room_data['room_no'];
-								$conn->query("INSERT INTO `transaction`(guest_id, room_id, room_no, status, checkin) VALUES('$guest_id', '$room_id', '$room_no', 'Pending', '$checkin')") or die(mysqli_error($conn));
-								header("location:reply_reserve.php");
-							} else {
-								echo "<script>alert('Room not found!')</script>";
+							$room_query = $conn->query("SELECT * FROM room WHERE room_id = '$room_id'") or die(mysqli_error($conn));
+							$room_data = $room_query->fetch_array();
+							$price = $room_data['price'];
+							$total_bill = $price * $dayscount;
+							if($extra_bed == "Yes") {
+								$total_bill += 300;
 							}
+							$conn->query("INSERT INTO `transaction`(guest_id, room_id, room_no, extra_bed, days, checkin_time, checkout, checkout_time, bill, status, checkin) VALUES('$guest_id', '$room_id', '$room_id', '$extra_bed', '$dayscount', '$checkintime', '$checkout', '$checkouttime', '$total_bill', 'Pending', '$checkin')") or die(mysqli_error($conn));
+							header("location:pay.php");
 						}else{
 							echo "<script>alert('Error Javascript Exception!')</script>";
 						}
+				}	
 			}	
-		}	
-}	
+	}	
+?>
