@@ -20,6 +20,7 @@
                         $sender_name = $_POST['sender_name'];
                         $reference_number = $_POST['reference_number'];
                         $denom = $_GET['denom'];
+                        $room_id = $_GET['room_id'];
                         include('./admin/connect.php');
                         include('./email.php');
                         include_email($sender_name, $reference_number);
@@ -28,9 +29,11 @@
                             die("Connection failed: " . $conn->connect_error);
                         }
                         
-                        $sql = "INSERT INTO db_hor.payments (sender_name, reference_number, payment_denom) VALUES ('$sender_name', '$reference_number', '$denom')";
+                        $sql = "INSERT INTO db_hor.payments (sender_name, reference_number, payment_denom, room_id) VALUES (?, ?, ?, ?)";
+                        $stmt = $conn->prepare($sql);
+                        $stmt->bind_param("ssss", $sender_name, $reference_number, $denom, $room_id);
                         
-                        if ($conn->query($sql) === TRUE) {
+                        if ($stmt->execute()) {
                             header("Location: /Online_Hotel_Reservation/Online_Hotel_Reservation/reply_reserve.php");
                             exit();
                         }

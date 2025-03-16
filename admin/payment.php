@@ -55,9 +55,11 @@
                         <tr>
                             <th>Sender Name</th>
                             <th>Reference Number</th>
+                            <th>Room ID</th>
                             <th>Payment Amount</th>
                             <th>Date Created</th>
                             <th>Action</th>
+                            <th>Release Receipt</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -96,6 +98,10 @@
                             }
                         });
                     }
+
+                    function generateReceipt(payment_id) {
+                        window.open('generate_receipt.php?payment_id=' + payment_id, '_blank');
+                    }
                     </script>
 
                     <?php
@@ -105,6 +111,7 @@
                     <tr>
                         <td><?php echo htmlspecialchars($fetch['sender_name'])?></td>
                         <td><?php echo htmlspecialchars($fetch['reference_number'])?></td>
+                        <td><?php echo htmlspecialchars($fetch['room_id'])?></td>
                         <td><?php echo strtoupper(htmlspecialchars($fetch['payment_denom']))?></td>
                         <td><?php echo date('M d, Y h:i A', strtotime($fetch['created_at']))?></td>
                         <td>
@@ -119,6 +126,13 @@
                             <?php else: ?>
                                 <span class="label label-success">Received</span>
                             <?php endif; ?>
+                            </center>
+                        </td>
+                        <td>
+                            <center>
+                                <button class="btn btn-primary" onclick="generateReceipt(<?php echo $fetch['payment_id']?>)">
+                                    <i class="glyphicon glyphicon-file"></i> Generate Receipt
+                                </button>
                             </center>
                         </td>
                     </tr>

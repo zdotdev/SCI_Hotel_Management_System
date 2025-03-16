@@ -43,7 +43,7 @@
 								$total_bill += 300;
 							}
 							$conn->query("INSERT INTO `transaction`(guest_id, room_id, room_no, extra_bed, days, checkin_time, checkout, checkout_time, bill, status, checkin) VALUES('$guest_id', '$room_id', '$room_id', '$extra_bed', '$dayscount', '$checkintime', '$checkout', '$checkouttime', '$total_bill', 'Pending', '$checkin')") or die(mysqli_error($conn));
-							header("location:pay.php");
+							header("location:pay.php?room_id=$room_id");
 						}else{
 							echo "<script>alert('Error Javascript Exception!')</script>";
 						}

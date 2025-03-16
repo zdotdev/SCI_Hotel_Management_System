@@ -47,19 +47,19 @@
 		</ol>
 		<div style = "margin:auto;" class="carousel-inner" role="listbox">
 			<div class="item active">
-				<img src="images/a.jpeg" style = "width:100%; height:450px;" />
+				<img src="images/a.jpeg" style = "width:100%; height:100%;" />
 			</div>
 		
 			<div class="item">
-				<img src="images/b.jpeg" style = "width:100%; height:450px;"  />
+				<img src="images/b.jpeg" style = "width:100%; height:100%;"  />
 			</div>
 		
 			<div class="item">
-				<img src="images/c.jpeg" style = "width:100%; height:450px;" />
+				<img src="images/c.jpeg" style = "width:100%; height:100%;" />
 			</div>
 		
 			<div class="item">
-				<img src="images/d.jpeg" style = "width:100%; height:450px;" />
+				<img src="images/d.jpeg" style = "width:100%; height:100%;" />
 			</div>
 			
 		
@@ -71,11 +71,6 @@
 			<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 			<span class="sr-only">Next</span>
 		</a>	
-	</div>
-	<br />
-	<br />
-	<div style = "text-align:right; margin-right:10px;" class = "navbar navbar-default navbar-fixed-bottom">
-		<label></label>
 	</div>
 </body>
 <script src = "js/jquery.js"></script>
