@@ -19,7 +19,7 @@ function include_email($sender_name, $reference_number) {
         $mail->Port = 587;
 
         $mail->setFrom('zeddotdev@gmail.com', 'Mailer');
-        $mail->addAddress('www.ragaszedrick25@gmail.com', 'Recipient Name');
+        $mail->addAddress('grimaldoapril8@gmail.com', 'Recipient Name');
 
         $mail->isHTML(true);
         $mail->Subject = 'Hotel Reservation Confirmation';
