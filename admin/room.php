@@ -42,7 +42,9 @@
 				$query_pending = $conn->query("SELECT COUNT(*) as pending_count FROM payments WHERE status = 'pending'") or die(mysqli_error($conn));
 				$pending_count = $query_pending->fetch_assoc()['pending_count'];
 			?>
-			<li><a href = "payment.php">Payment <?php if($pending_count > 0): ?><span class="badge"><?php echo $pending_count; ?></span><?php endif; ?></a></li>		
+			<li><a href = "payment.php">Payment <?php if($pending_count > 0): ?><span class="badge"><?php echo $pending_count; ?></span><?php endif; ?></a></li>
+			<li><a href="help.php">Help</a></li>
+			<li><a href="about.php">About</a></li>	
 			<li><a onclick="logout()" style="cursor: pointer;">Log out</a></li>		
 		</ul>	
 	</div>

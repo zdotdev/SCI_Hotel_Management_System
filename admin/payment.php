@@ -43,6 +43,8 @@
 				$pending_count = $query_pending->fetch_assoc()['pending_count'];
 			?>
 			<li class="active"><a href = "payment.php">Payment <?php if($pending_count > 0): ?><span class="badge"><?php echo $pending_count; ?></span><?php endif; ?></a></li>		
+            <li><a href="help.php">Help</a></li>
+            <li><a href="about.php">About</a></li>
             <li><a onclick="logout()" style="cursor: pointer;">Log out</a></li>		
 		</ul>	
 	</div>

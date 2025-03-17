@@ -45,7 +45,9 @@
 				$query_pending = $conn->query("SELECT COUNT(*) as pending_count FROM payments WHERE status = 'pending'") or die(mysqli_error($conn));
 				$pending_count = $query_pending->fetch_assoc()['pending_count'];
 			?>
-			<li><a href = "payment.php">Payment <?php if($pending_count > 0): ?><span class="badge"><?php echo $pending_count; ?></span><?php endif; ?></a></li>		
+			<li><a href = "payment.php">Payment <?php if($pending_count > 0): ?><span class="badge"><?php echo $pending_count; ?></span><?php endif; ?></a></li>
+			<li><a href="help.php">Help</a></li>
+			<li><a href="about.php">About</a></li>
 			<li><a onclick="logout()" style="cursor: pointer;">Log out</a></li>
 		</ul>	
 	</div>
@@ -53,8 +55,8 @@
 	<div class="container-fluid">
 		<div class="panel panel-default">
 			<div class="panel-body">
-				<div class="row"></div>
-					<div class="col-md-8 col-md-offset-2"></div>
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
 						<div class="text-center">
 							<h2 class="text-primary">Welcome to Dewey Hotel</h2>
 							<p class="lead">Experience luxury and comfort at its finest</p>
@@ -70,7 +72,7 @@
 				</div>
 			</div>
 		</div>
-	</div></div>
+	</div>
 </body>
 <script src = "../js/jquery.js"></script>
 <script src = "../js/bootstrap.js"></script>	
