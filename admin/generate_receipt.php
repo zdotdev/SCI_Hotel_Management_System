@@ -89,7 +89,7 @@
             </div>
             <div class="receipt-row">
                 <span>Amount Paid:</span>
-                <span>₱<?php echo $payment_data['payment_denom']; ?></span>
+                <span><?php echo strtoupper($payment_data['payment_denom']); ?></span>
             </div>
             <div class="receipt-row">
                 <span>Date:</span>

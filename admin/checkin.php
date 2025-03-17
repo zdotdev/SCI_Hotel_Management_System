@@ -39,9 +39,9 @@
 	<div class = "container-fluid">	
 		<div class = "panel panel-default">
 			<?php
-				$q_p = $conn->query("SELECT COUNT(*) as total FROM `transaction` WHERE `status` = 'Pending'") or die(mysqli_error());
+				$q_p = $conn->query("SELECT COUNT(*) as total FROM `transaction` WHERE `status` = 'Pending'") or die(mysqli_error($conn));
 				$f_p = $q_p->fetch_array();
-				$q_ci = $conn->query("SELECT COUNT(*) as total FROM `transaction` WHERE `status` = 'Check In'") or die(mysqli_error());
+				$q_ci = $conn->query("SELECT COUNT(*) as total FROM `transaction` WHERE `status` = 'Check In'") or die(mysqli_error($conn));
 				$f_ci = $q_ci->fetch_array();
 			?>
 			<div class = "panel-body">
@@ -67,7 +67,7 @@
 					</thead>
 					<tbody>
 						<?php
-							$query = $conn->query("SELECT * FROM `transaction` NATURAL JOIN `guest` NATURAL JOIN `room` WHERE `status` = 'Check In'") or die(mysqli_query());
+							$query = $conn->query("SELECT * FROM `transaction` NATURAL JOIN `guest` NATURAL JOIN `room` WHERE `status` = 'Check In'") or die(mysqli_error($conn));
 							while($fetch = $query->fetch_array()){
 						?>
 						<tr>
@@ -89,11 +89,6 @@
 				</table>
 			</div>
 		</div>
-	</div>
-	<br />
-	<br />
-	<div style = "text-align:right; margin-right:10px;" class = "navbar navbar-default navbar-fixed-bottom">
-		<label></label>
 	</div>
 </body>
 <script src = "../js/jquery.js"></script>

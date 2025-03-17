@@ -45,11 +45,6 @@
 			</div>
 		</div>
 		<div class = "col-md-4"></div>
-	</div>	
-	<br />
-	<br />
-	<div style = "text-align:right; margin-right:10px;" class = "navbar navbar-default navbar-fixed-bottom">
-		<label></label>
 	</div>
 </body>
 <script src = "../js/jquery.js"></script>

@@ -38,11 +38,6 @@
 			</div>
 		</div>
 	</div>
-	<br />
-	<br />
-	<div style = "text-align:right; margin-right:10px;" class = "navbar navbar-default navbar-fixed-bottom">
-		<label></label>
-	</div>
 </body>
 <script src = "js/jquery.js"></script>
 <script src = "js/bootstrap.js"></script>	

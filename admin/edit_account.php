@@ -41,7 +41,7 @@
 			<div class = "panel-body">
 				<div class = "alert alert-info">Account / Change Account</div>
 				<?php
-					$query = $conn->query("SELECT * FROM `admin` WHERE `admin_id` = '$_REQUEST[admin_id]'") or die(mysqli_error());
+					$query = $conn->query("SELECT * FROM `admin` WHERE `admin_id` = '$_REQUEST[admin_id]'") or die(mysqli_error($conn));
 					$fetch = $query->fetch_array();
 				?>
 				<br />
@@ -67,11 +67,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	<br />
-	<br />
-	<div style = "text-align:right; margin-right:10px;" class = "navbar navbar-default navbar-fixed-bottom">
-		<label></label>
 	</div>
 </body>
 <script src = "../js/jquery.js"></script>

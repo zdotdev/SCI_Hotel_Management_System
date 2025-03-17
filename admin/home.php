@@ -46,22 +46,31 @@
 				$pending_count = $query_pending->fetch_assoc()['pending_count'];
 			?>
 			<li><a href = "payment.php">Payment <?php if($pending_count > 0): ?><span class="badge"><?php echo $pending_count; ?></span><?php endif; ?></a></li>		
-			<li><a onclick="logout()" style="cursor: pointer;">log out</a></li>
+			<li><a onclick="logout()" style="cursor: pointer;">Log out</a></li>
 		</ul>	
 	</div>
 	<br />
-	<div class = "container-fluid">
-		<div class = "panel panel-default">
-			<div class = "panel-body">
-				<center><img src = "../images/back.jpg" width="800px" height="600px" /></center>
+	<div class="container-fluid">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="row"></div>
+					<div class="col-md-8 col-md-offset-2"></div>
+						<div class="text-center">
+							<h2 class="text-primary">Welcome to Dewey Hotel</h2>
+							<p class="lead">Experience luxury and comfort at its finest</p>
+							<div class="thumbnail" style="border: none; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+								<img src="../images/1.jpg" class="img-responsive" alt="Hotel" style="max-height: 600px; width: 100%; object-fit: cover;">
+							</div>
+							<div class="well" style="background: rgba(0,0,0,0.02); margin-top: 20px;">
+								<h4>Hotel Management Dashboard</h4>
+								<p>Manage reservations, rooms, and customer accounts efficiently</p>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-	<br />
-	<br />
-	<div style = "text-align:right; margin-right:10px;" class = "navbar navbar-default navbar-fixed-bottom">
-		<label></label>
-	</div>
+	</div></div>
 </body>
 <script src = "../js/jquery.js"></script>
 <script src = "../js/bootstrap.js"></script>	
